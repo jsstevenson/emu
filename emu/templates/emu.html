@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <div id="output" class="text"></div>
+    <div id="input" class="text">
+        <form onsubmit="sendEntry(); return false;" id="entryForm">
+            <label>$ </label>
+            <input type="text" id="textBox" value="" class="text"/>
+            <input type="button" value="Submit" id="submit" onclick="sendEntry();" />
+        </form>
+    </div>
+{% endblock %}
+{% block footer %}
+    <hr />
+    <a href="jsstevenson.github.io/" class="text footer-link">James Stevenson</a>
+    <script src="{{ url_for('static', filename='update.js') }}"></script>
+{% endblock %}
