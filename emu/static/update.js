@@ -26,14 +26,13 @@ function sendEntry() {
                 })
             } else {
                 let errLine = document.createElement("p");
-                errLine.classList.append("error");
+                errLine.classList.add("error");
                 document.getElementById("output").appendChild(errLine);
                 console.log("error");
             }
         }
     }
+
     request.send(formData);
-
-
     form.scrollIntoView();
 }
