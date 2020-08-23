@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS files;
-DROP TABLE IF EXISTS env;
+DROP TABLE IF EXISTS local_file;
+DROP TABLE IF EXISTS hdfs_file;
 
 CREATE TABLE local_file (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -8,7 +8,7 @@ CREATE TABLE local_file (
     f_size INTEGER DEFAULT 0 NOT NULL,
     f_permissions INTEGER DEFAULT 644 NOT NULL,
     f_parent_id INTEGER NOT NULL,
-    last_edited DATETIME DEFAULT 'now' NOT NULL,
+    last_edited DATETIME DEFAULT current_timestamp NOT NULL,
     data BLOB DEFAULT ''
 );
 
@@ -21,23 +21,6 @@ CREATE TABLE hdfs_file (
     f_size INTEGER DEFAULT 0 NOT NULL,
     f_permissions INTEGER DEFAULT 644 NOT NULL,
     f_parent_id INTEGER NOT NULL,
-    last_edited DATETIME DEFAULT 'now' NOT NULL,
+    last_edited DATETIME DEFAULT current_timestamp NOT NULL,
     data BLOB DEFAULT ''
 );
-
-/* local root directory */
-INSERT INTO local_file(f_name, f_type, f_parent_id)
-VALUES (
-    'root',
-    'd',
-    -1
-)
-
-/* hdfs root directory */
-INSERT INTO hdfs_file(f_name, f_type, f_parent_id)
-VALUES (
-    'root',
-    'd',
-    -1
-);
-
