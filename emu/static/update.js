@@ -8,22 +8,26 @@ function sendEntry() {
     newInputLine.textContent = "$ " + input;
     document.getElementById("output").appendChild(newInputLine);
 
-    // TODO POST to server, get response
-    // let formData = new FormData(form);
-
     let formData = new FormData();
     formData.append("text", input)
 
     let request = new XMLHttpRequest();
-    request.open("POST", "/entry", false);
+    request.open("POST", "/entry");
     request.onreadystatechange = function() {
         if (request.readyState === XMLHttpRequest.DONE) {
             let status = request.status;
             if (status === 0 || (status >= 200 && status < 400)) {
                 // TODO render element
-                console.log(request.responseText);
+                let response = JSON.parse(request.response);
+                response.lines.forEach(line => {
+                    let newLine = document.createElement("p");
+                    newLine.textContent = line
+                    document.getElementById("output").appendChild(newLine);
+                })
             } else {
-                // TODO handle error
+                let errLine = document.createElement("p");
+                errLine.classList.append("error");
+                document.getElementById("output").appendChild(errLine);
                 console.log("error");
             }
         }
@@ -32,8 +36,4 @@ function sendEntry() {
 
 
     form.scrollIntoView();
-}
-
-function it_worked() {
-    console.log("it worked!");
 }
