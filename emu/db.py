@@ -31,6 +31,7 @@ def init_db():
     db = get_db()
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
+    # initialize with roots
     db.executescript("INSERT INTO local_file(f_name, f_type, f_parent_id)"
                      "VALUES('root', 'd', -1);"
                      "INSERT INTO hdfs_file(f_name, f_type, f_parent_id)"
