@@ -29,9 +29,13 @@ function sendEntry() {
                 document.getElementById("output").appendChild(errLine);
                 console.log("error");
             }
+            form.scrollIntoView();
         }
     }
 
     request.send(formData);
-    form.scrollIntoView();
 }
+
+var input = document.getElementById('textBox');
+input.focus();
+input.select();
