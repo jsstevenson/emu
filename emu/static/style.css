@@ -42,7 +42,7 @@ a {
   text-align: center;
   font-family: HelveticaNeue, "Helvetica Neue", "Lucida Grande", Arial,
     sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   margin: 0px;
 }
 
@@ -96,7 +96,7 @@ a {
 }
 
 .content-main {
-  height: 62vh;
+  height: 69vh;
   overflow-y: auto;
 }
 
@@ -107,10 +107,13 @@ p {
   font-size: 12px;
 }
 
-.footer {
-  text-align: right;
+#textBox {
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom-style: hidden;
 }
 
-.footer a {
-  font-size: 0.8em;
+#textBox:focus {
+  outline: none;
 }
