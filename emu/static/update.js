@@ -17,7 +17,6 @@ function sendEntry() {
         if (request.readyState === XMLHttpRequest.DONE) {
             let status = request.status;
             if (status === 0 || (status >= 200 && status < 400)) {
-                // TODO render element
                 let response = JSON.parse(request.response);
                 response.lines.forEach(line => {
                     let newLine = document.createElement("p");

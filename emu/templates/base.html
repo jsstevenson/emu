@@ -7,11 +7,32 @@
         {% endblock %}
     </head>
     <body>
-        <div id="content">
-            {% block content %}
-            {% endblock %}
+        <div class="window">
+            <div class="title-bar">
+                <div class="buttons">
+                    <div class="buttons">
+                        <div class="red">
+                        </div>
+                        <div class="yellow">
+                        </div>
+                        <div class="green">
+                        </div>
+                    </div>
+                </div>
+                <span class="title-text">
+                    <p>Emu</p>
+                </span>
+            </div>
+            <div class="window-content content">
+                <div class="content-main">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+                <div class="footer">
+                    {% block footer %}
+                    {% endblock %}
+                </div>
+            </div>
         </div>
-        {% block footer %}
-        {% endblock %}
     </body>
 </html>
