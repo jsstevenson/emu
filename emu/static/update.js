@@ -87,6 +87,10 @@ function sendEntry() {
   request.send(formData);
 }
 
-/* Input form is selected on page load */
+/* Input form is selected on page load and any click in 'window'*/
 textBox.focus();
 textBox.select();
+document.getElementsByClassName("window")[0]
+    .addEventListener('click', function(event) {
+        textBox.focus();
+    });
