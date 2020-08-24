@@ -1,44 +1,92 @@
-/* Gets user text entry from form, sends XHR request, updates DOM */
-function sendEntry() {
-    let form = document.getElementById("textBox");
-    let input = form.value;
-    form.value = ''
+/* command history */
+let cmdHistory = [];
+let currentIndex = 0;
 
-    // update input
-    let newInputLine = document.createElement("p");
-    newInputLine.textContent = "$ " + input;
-    document.getElementById("output").appendChild(newInputLine);
-
-    let formData = new FormData();
-    formData.append("text", input)
-
-    let request = new XMLHttpRequest();
-    request.open("POST", "/entry");
-    request.onreadystatechange = function() {
-        if (request.readyState === XMLHttpRequest.DONE) {
-            let status = request.status;
-            if (status === 0 || (status >= 200 && status < 400)) {
-                let response = JSON.parse(request.response);
-                response.lines.forEach(line => {
-                    let newLine = document.createElement("p");
-                    newLine.textContent = line
-                    document.getElementById("output").appendChild(newLine);
-                })
-            } else {
-                let errLine = document.createElement("p");
-                errLine.classList.add("error");
-                document.getElementById("output").appendChild(errLine);
-                console.log("error");
-            }
-            form.scrollIntoView();
-        }
-    }
-
-    request.send(formData);
+function getHistory() {
+  if (currentIndex > 0 && cmdHistory.length > currentIndex + 1) {
+    let textBox = document.getElementById("textBox");
+    currentIndex++;
+    textBox.value = cmdHistory[currentIndex];
+  } else if (currentIndex == 0 && cmdHistory.length > currentIndex) {
+    let textBox = document.getElementById("textBox");
+    cmdHistory.unshift(textBox.value);
+    currentIndex++;
+    textBox.value = cmdHistory[currentIndex];
+  }
 }
 
+function getFuture() {
+  if (currentIndex > 0) {
+    let textBox = document.getElementById("textBox");
+    currentIndex--;
+    textBox.value = cmdHistory[currentIndex];
+    if (currentIndex == 0) {
+      cmdHistory.shift();
+    }
+  }
+}
+
+function traverseHistory(e) {
+  e = e || window.event;
+  if (e.keyCode == "38") {
+    console.log("up");
+    console.log(cmdHistory);
+    getHistory();
+  } else if (e.keyCode == "40") {
+    console.log(cmdHistory);
+    console.log("down");
+    getFuture();
+  }
+}
+let textBox = document.getElementById("textBox");
+textBox.onkeydown = traverseHistory;
+
+/* Gets user text entry from form, sends request, updates DOM */
+function sendEntry() {
+  let form = document.getElementById("textBox");
+  let input = form.value;
+  if (input != "") {
+    cmdHistory.unshift(input);
+  }
+  form.value = "";
+  currentIndex = 0;
+  cmdHistory = cmdHistory.filter((cmd) => {
+    return cmd != "";
+  });
+
+  // update input
+  let newInputLine = document.createElement("p");
+  newInputLine.textContent = "$ " + input;
+  document.getElementById("output").appendChild(newInputLine);
+
+  let formData = new FormData();
+  formData.append("text", input);
+
+  let request = new XMLHttpRequest();
+  request.open("POST", "/entry");
+  request.onreadystatechange = function () {
+    if (request.readyState === XMLHttpRequest.DONE) {
+      let status = request.status;
+      if (status === 0 || (status >= 200 && status < 400)) {
+        let response = JSON.parse(request.response);
+        response.lines.forEach((line) => {
+          let newLine = document.createElement("p");
+          newLine.textContent = line;
+          document.getElementById("output").appendChild(newLine);
+        });
+      } else {
+        let errLine = document.createElement("p");
+        errLine.classList.add("error");
+        document.getElementById("output").appendChild(errLine);
+        console.log("error");
+      }
+      form.scrollIntoView();
+    }
+  };
+
+  request.send(formData);
+}
 
 /* Input form is selected on page load */
-var input = document.getElementById('textBox');
-input.focus();
-input.select();
+textBox.focus();
+textBox.select();
