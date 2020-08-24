@@ -50,3 +50,9 @@ Finally, navigate to 127.0.0.1:5000/app in a web browser.
 At present, available commands are limited. The user can enter `help` at the in-app shell prompt to see a full list.
 
 In addition to shell commands, users can press the up- and down-arrow keys, as in a bash or zshell terminal, to traverse their command history.
+
+## Media
+
+Example screenshot:
+
+![example-screenshot](https://github.com/jsstevenson/emu/blob/assets/screenshot.png?raw=true)
