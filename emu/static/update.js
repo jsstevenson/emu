@@ -1,3 +1,4 @@
+/* Gets user text entry from form, sends XHR request, updates DOM */
 function sendEntry() {
     let form = document.getElementById("textBox");
     let input = form.value;
@@ -36,6 +37,8 @@ function sendEntry() {
     request.send(formData);
 }
 
+
+/* Input form is selected on page load */
 var input = document.getElementById('textBox');
 input.focus();
 input.select();
