@@ -2,6 +2,7 @@
 let cmdHistory = [];
 let currentIndex = 0;
 
+/* Updates text box from command input history */
 function getHistory() {
   if (currentIndex > 0 && cmdHistory.length > currentIndex + 1) {
     let textBox = document.getElementById("textBox");
@@ -15,6 +16,7 @@ function getHistory() {
   }
 }
 
+/* Updates textBox with 'future' commands */
 function getFuture() {
   if (currentIndex > 0) {
     let textBox = document.getElementById("textBox");
@@ -26,14 +28,16 @@ function getFuture() {
   }
 }
 
+/* Checks for up/down key input and calls history functions
+ * Args:
+ *  e: event
+ */
 function traverseHistory(e) {
   e = e || window.event;
   if (e.keyCode == "38") {
     console.log("up");
-    console.log(cmdHistory);
     getHistory();
   } else if (e.keyCode == "40") {
-    console.log(cmdHistory);
     console.log("down");
     getFuture();
   }
@@ -51,6 +55,7 @@ function sendEntry() {
       let newInputLine = document.createElement("p");
       newInputLine.textContent = "$";
       document.getElementById("output").appendChild(newInputLine);
+      form.scrollIntoView();
       return;
   }
   form.value = "";

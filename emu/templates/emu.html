@@ -4,6 +4,10 @@
 {{ super() }}
 {% endblock %}
 {% block content %}
+<div id="header" class="text">
+    <p>emu v0.1</p>
+    <p>enter `help` to see valid commands</p>
+</div>
 <div id="output" class="text"></div>
 <div id="input" class="text">
     <form onsubmit="sendEntry(); return false;" id="entryForm">
