@@ -26,7 +26,7 @@ def interpret(input: str) -> Dict[str, List[str]]:
                         (re.compile("^hdfs dfs \-chown"), _hdfs_chown),
                         (re.compile("^hdfs dfs \-ls"), _hdfs_ls),
                         (re.compile("^hdfs dfs \-rm"), _hdfs_rm),
-                        (re.compile("^help$"), _help)]
+                        (re.compile("^help"), _help)]
     for (pattern, callback) in command_dispatch:
         match = re.match(pattern, input)
         if match:
@@ -219,11 +219,28 @@ def _hdfs_rm(args: str) -> List[str]:
     return [""]
 
 
-def _help():
+def _help(args):
     results = ["emu help",
                 "----------------------------",
                 "Allowed commands:",
                 "`hdfs dfs -mkdir [path/to/new/dir]: create new directory`",
                 "`hdfs dfs -ls [path/to/file]`: list files or files in directory",
                 "`hdfs dfs -chown [path/to/file]`: change ownership of file or directory",
-                "`hdfs dfs -rm [path/to/file]`: remove file or directory"]
+                "`hdfs dfs -rm [path/to/file]`: remove file or directory",
+                "`help [cmd]`: get help message for specific command, eg `help hdfs dfs -rm`"]
+    args = remove_spcs(args)
+    print(args)
+    if args == '':
+        return results
+    elif args == 'hdfs dfs -mkdir':
+        return results[3]
+    elif args == 'hdfs dfs -ls':
+        return results[4]
+    elif args == 'hdfs dfs -chown':
+        return results[5]
+    elif args == 'hdfs dfs -rm':
+        return results[6]
+    elif args == 'help':
+        return results[7]
+    else:
+        return ["sh: help: argument not recognized. enter `help` to see all commands"]
