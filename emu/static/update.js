@@ -47,6 +47,11 @@ function sendEntry() {
   let input = form.value;
   if (input != "") {
     cmdHistory.unshift(input);
+  } else {
+      let newInputLine = document.createElement("p");
+      newInputLine.textContent = "$";
+      document.getElementById("output").appendChild(newInputLine);
+      return;
   }
   form.value = "";
   currentIndex = 0;
